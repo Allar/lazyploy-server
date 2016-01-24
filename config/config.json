@@ -1,0 +1,27 @@
+{
+  "use_env_variable": true,
+  "development": {
+    "username": null,
+    "password": null,
+    "database": null,
+    "host": "localhost",
+    "dialect": "sqlite",
+    "storage": "database.sqlite"
+  },
+  "test": {
+    "username": null,
+    "password": null,
+    "database": null,
+    "host": "localhost",
+    "dialect": "sqlite",
+    "storage": "database.sqlite"
+  },
+  "production": {
+    "username": null,
+    "password": null,
+    "database": null,
+    "host": "localhost",
+    "dialect": "sqlite",
+    "storage": "database.sqlite"
+  }
+}

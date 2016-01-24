@@ -5,6 +5,7 @@
  */
 
 var app = require('../app');
+var models = require('../models');
 var debug = require('debug')('servermanagerbackend:server');
 var http = require('http');
 
@@ -15,19 +16,17 @@ var http = require('http');
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
-/**
- * Create HTTP server.
- */
-
+// Create HTTP server.
 var server = http.createServer(app);
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+// Sequelize will sync all database models before server start
+models.sequelize.sync().then(function () {
+    // Listen on provided port, on all network interfaces.
+    server.listen(port);
+    server.on('error', onError);
+    server.on('listening', onListening);
+});
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
 
 /**
  * Normalize a port into a number, string, or false.
