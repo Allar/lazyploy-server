@@ -1,22 +1,22 @@
 "use strict";
 
 module.exports = function(sequelize, DataTypes) {
-    var Server = sequelize.define('Server', {
-        hostname: {
+    var Build = sequelize.define('Build', {
+        project: {
             type: DataTypes.STRING
         },
-        ip : {
+        desc : {
             type: DataTypes.STRING
         },
-        status: {
+        status : {
             type: DataTypes.STRING
         }
     }, {
         freezeTableName: true,
-        force: true
+        force: false
     });
 
-  return Server;
+  return Build;
 };
 
 
