@@ -1,12 +1,13 @@
 var models = require('../models');
 var express = require('express');
 var router = express.Router();
-var fs = require('fs');
+var fs = require('fs-extra');
 var mkdirp = require('mkdirp');
 var multer  = require('multer');
-var upload = multer({ dest: './uploadtest/' });
 
+var upload_dir = './uploads';
 var storage_dir = './storage/';
+var upload = multer({ dest: upload_dir });
 
 router.get('/status', function(req, res, next) {
   res.render('status', { status: 'Server is currently eating shit.' });
@@ -49,38 +50,33 @@ function FindProjectOrFail(project_name, res)
     });
 }
 
-router.post('/projects/build/new', function (req, res, next) {
-    var payload = req.body;
-    var output = {};
-    if (payload !== undefined) {
-        if (payload.project == undefined) {
-            res.stats(400).json({status: 'Error: Missing project name.'})
-            return;
-        }
-        
-        FindProjectOrFail(payload.project, res)
-        .then(function(project) {
-            models.Build.create({
-                project: payload.project,
-                desc: payload.desc,
-                status: 'Started'
-            }).then(function (build) {
-                res.json({build});
-            });
-        });
-    }
-});
-
-router.post('/uploadtest', upload.any(), function (req, res, next) {
-    console.log(req.headers);
-    res.json({status: 'OK'});
-});
-
-router.post('/projects/build/upload/:project_name/:build_id/:file_name', upload.any(), function (req, res, next) {
+router.get('/projects/:project_name/build/new/:desc', function (req, res, next) {
     FindProjectOrFail(req.params.project_name, res)
     .then(function(project) {
+        models.Build.create({
+            project: req.params.project_name,
+            desc: req.params.desc,
+            status: 'Started'
+        }).then(function (build) {
+            res.json({build});
+        });
+    });
+});
+
+router.post('/projects/:project_name/build/upload/:build_id', upload.any(), function (req, res, next) {
+    FindProjectOrFail(req.params.project_name, res)
+    .then(function(project) {
+        var BuildDir = storage_dir + req.params.project_name + '/' + req.params.build_id + '/';
+        mkdirp.sync(BuildDir);
         console.log(req.files);
-        res.json({status: 'File uploaded for project: ' + project.name});
+        for (var i = 0; i < req.files.length; ++i) {
+            console.log('Recieved ' + req.files[i].originalname + ' for project ' + req.params.project_name + ' build ' + req.params.build_id + '.');
+            fs.move(req.files[i].destination + '/' + req.files[i].filename, BuildDir + req.files[i].originalname, { clobber: true }, function(err) {
+                if (err) return console.error(err);
+            });            
+        }
+        
+        res.json({status: "Files uploaded."});
     });    
 });
 

@@ -37,3 +37,7 @@ node_modules
 
 # transient database files
 database.sqlite
+
+# uploads and storage
+storage
+uploads
