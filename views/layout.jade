@@ -1,7 +1,17 @@
 doctype html
-html
+html(lang='en')
   head
+    meta(name="viewport" content="width=device-width, initial-scale=1")
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
+    link(href="/static/css/bootstrap.min.css", rel="stylesheet")
+    link(href="/static/css/font-awesome.css", rel="stylesheet")
+    link(href="/static/css/style.css", rel="stylesheet")
+    script(src="/static/js/angular.js")
+    script(src="/static/js/socket.io.js")
+    script(src="/static/js/angular-socket.js")
+    script(src="/static/js/ui-bootstrap-tpls.js")
+    script(src="/static/js/smart-table.js")
+    script(src="/static/js/controllers.js")
+  
+  body(ng-app='buildManagerApp')
     block content

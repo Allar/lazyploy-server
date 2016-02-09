@@ -1,6 +1,5 @@
 var models = require('../models');
-var express = require('express');
-var router = express.Router();
+var router = require('feathers').Router();
 var fs = require('fs-extra');
 var mkdirp = require('mkdirp');
 var multer  = require('multer');
@@ -8,26 +7,6 @@ var multer  = require('multer');
 var upload_dir = './uploads';
 var storage_dir = './storage/';
 var upload = multer({ dest: upload_dir });
-
-router.get('/status', function(req, res, next) {
-  res.render('status', { status: 'Server is currently eating shit.' });
-});
-
-router.get('/servers', function (req, res, next) {
-    models.Server.findAll({
-    
-    }).then(function(servers) {
-        res.json(servers);
-    });
-});
-
-router.get('/projects', function (req, res, next) {
-    models.Project.findAll({
-    
-    }).then(function(projects) {
-        res.json(projects);
-    });
-});
 
 function FindProjectOrFail(project_name, res)
 {
@@ -78,44 +57,6 @@ router.post('/projects/:project_name/build/upload/:build_id', upload.any(), func
         
         res.json({status: "Files uploaded."});
     });    
-});
-
-router.post('/servers/update', function (req, res, next) {
-    var payload = req.body;
-    if (payload !== undefined) {
-        if (payload.hostname !== undefined) {
-            var serverIp = req.ip.substring(req.ip.lastIndexOf(':') + 1);
-            models.Server.find({ where: { hostname: payload.hostname }})
-            .then(function(server, err) {
-                if (err) {
-                    console.error(err);
-                    res.status(500).json({status: 'ERROR: ' + err});
-                    return;
-                }
-                if (!server) {
-                    models.Server.create({
-                        hostname: payload.hostname,
-                        ip: serverIp,
-                        status: payload.status
-                    }).then(function(server) {
-                       res.json({status: 'Server entry created.'}) ;
-                    });
-                } else {
-                    server.updateAttributes({
-                            hostname: payload.hostname,
-                            ip: serverIp,
-                            status: payload.status
-                        }).then(function() {
-                            res.json({status: 'Server entry updated.'}) ;
-                        }).catch(function(e) {
-                            res.json({status: 'Server entry update got fubar.'}) ;
-                            
-                    });
-                }
-            });            
-        }
-    }
-    console.log(req.body);
 });
 
 module.exports = router;

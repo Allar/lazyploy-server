@@ -1,5 +1,34 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    h1= title
+
+    div.container-fluid
+        div.row
+            div.col-md-6
+                div.panel.panel-default(ng-controller="BuildListCtrl")
+                    div.panel-heading
+                        h1.panel-title Build List
+                    div.panel-body
+                        table.table.table-striped(st-table="displayedBuilds" st-safe-src="builds")
+                            thead
+                                tr
+                                    th.data-id(st-sort="id") #
+                                    th(st-sort="project") Project
+                                    th(st-sort="desc") Description
+                                    th(st-sort="status") Status
+                                tr
+                                    th(colspan="4")
+                                        input.input-sm.form-control(st-search placeholder="Search..." type="search")
+                            tbody
+                                tr(ng-repeat="build in displayedBuilds")
+                                    td.data-id {{build.id}}
+                                    td {{build.project}}
+                                    td {{build.desc}}
+                                    td {{build.status}}
+                            tfoot
+                                tr
+                                    td.text-center(colspan="4")
+                                        div(st-pagination="" st-items-by-page="itemsByPage")
+
+ 
