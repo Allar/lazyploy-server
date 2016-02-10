@@ -29,6 +29,27 @@ function FindProjectOrFail(project_name, res)
     });
 }
 
+function FindBuildOrFail(build_id, res)
+{
+    return new Promise(function(resolve, reject) {
+        models.Build.find({ where: { id: build_id }})
+        .then(function (build, err) {
+            if (err) {
+                console.error(err);
+                res.status(500).json({status: 'Error: Can\'t find build because: ' + err});
+                reject(err);
+                return;
+            }
+            if (build == null) {
+                res.status(404).json({status: "Error: Can't find build with id: " + build_id});
+                reject("Can't find build with id: " + build_id);
+                return;
+            }
+            resolve(build);
+        });
+    });
+}
+
 router.get('/projects/:project_name/build/new/:desc', function (req, res, next) {
     FindProjectOrFail(req.params.project_name, res)
     .then(function(project) {
@@ -42,14 +63,20 @@ router.get('/projects/:project_name/build/new/:desc', function (req, res, next) 
     });
 });
 
-router.post('/projects/:project_name/build/upload/:build_id', upload.any(), function (req, res, next) {
-    FindProjectOrFail(req.params.project_name, res)
-    .then(function(project) {
-        var BuildDir = storage_dir + req.params.project_name + '/' + req.params.build_id + '/';
+router.get('/builds/:build_id/download/:file', function (req, res){
+    FindBuildOrFail(req.params.build_id, res)
+    .then(function(build) {
+        res.sendfile(storage_dir + build.project + '/' + build.id + '/' + req.params.file);
+    });
+});
+
+router.post('/builds/:build_id/upload', upload.any(), function (req, res, next) {
+    FindBuildOrFail(req.params.build_id, res)
+    .then(function(build) {
+        var BuildDir = storage_dir + build.project + '/' + build.id + '/';
         mkdirp.sync(BuildDir);
-        console.log(req.files);
         for (var i = 0; i < req.files.length; ++i) {
-            console.log('Recieved ' + req.files[i].originalname + ' for project ' + req.params.project_name + ' build ' + req.params.build_id + '.');
+            console.log('Recieved ' + req.files[i].originalname + ' for project ' + build.project + ' build ' + build.id + '.');
             fs.move(req.files[i].destination + '/' + req.files[i].filename, BuildDir + req.files[i].originalname, { clobber: true }, function(err) {
                 if (err) return console.error(err);
             });            

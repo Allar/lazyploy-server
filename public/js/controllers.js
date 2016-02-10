@@ -1,4 +1,4 @@
-var buildManagerApp = angular.module('buildManagerApp', ['socket.io', 'ui.bootstrap', 'smart-table']);
+var buildManagerApp = angular.module('buildManagerApp', ['socket.io', 'ui.bootstrap', 'smart-table', 'angular-table']);
 
 buildManagerApp.filter('reverse', function() {
     return function(items) {
@@ -7,10 +7,28 @@ buildManagerApp.filter('reverse', function() {
 });
 
 buildManagerApp.controller('BuildListCtrl', function ($scope, $socket) {
+    
   $scope.builds = [];
+  
+  $scope.atconfig = {
+      itemsPerPage: 5,
+      fillLastPage: true
+  }
   
   $scope.totalItems = $scope.builds.length;
   $scope.itemsByPage = 5;
+  
+  $scope.getTableRowClass = function(item) {
+      if (item.status.includes("Completed")) {
+          return 'success';
+      }
+      if (item.status.includes("Failed")) {
+          return 'danger';
+      }
+      if (item.status.includes("Canceled")) {
+          return 'warning';
+      }
+  }
   
   $socket.on('api/builds created', function(newbuild) {
       console.log(newbuild);
@@ -19,7 +37,7 @@ buildManagerApp.controller('BuildListCtrl', function ($scope, $socket) {
   
   $socket.on('api/builds updated', function(newbuild) {
       console.log(newbuild);
-      for (var i = $scope.builds.length - 1; i >=0; --i) {
+      for (var i = 0; i < $scope.builds.length; ++i) {
           if ($scope.builds[i].id == newbuild.id) {
               $scope.builds[i] = newbuild;
               return;
@@ -30,7 +48,7 @@ buildManagerApp.controller('BuildListCtrl', function ($scope, $socket) {
   
   $socket.on('api/builds patched', function(newbuild) {
       console.log(newbuild);
-      for (var i = $scope.builds.length - 1; i >=0; --i) {
+      for (var i = 0; i < $scope.builds.length; ++i) {
           if ($scope.builds[i].id == newbuild.id) {
               $scope.builds[i] = newbuild;
               return;

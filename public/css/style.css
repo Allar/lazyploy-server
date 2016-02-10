@@ -9,3 +9,11 @@
 .table .data-id {
     width: 50px;    
 }
+
+.td[at_attribute='project'] {
+    width: 150px;
+}
+
+.table tr td .fa {
+    padding-right: 4px;
+}

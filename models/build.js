@@ -10,6 +10,9 @@ module.exports = function(sequelize, DataTypes) {
         },
         status : {
             type: DataTypes.STRING
+        },
+        platforms : {
+            type: DataTypes.STRING
         }
     }, {
         freezeTableName: true,

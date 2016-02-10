@@ -25,6 +25,8 @@ app.configure(feathers.rest())
     .use('/static/js', feathers.static(path.join(__dirname, 'node_modules/angular')))
     .use('/static/js', feathers.static(path.join(__dirname, 'node_modules/angular-ui-bootstrap/dist')))
     .use('/static/js', feathers.static(path.join(__dirname, 'node_modules/angular-smart-table/dist')))
+    .use('/static/css', feathers.static(path.join(__dirname, 'node_modules/ng-table/dist')))
+    .use('/static/js', feathers.static(path.join(__dirname, 'node_modules/ng-table/dist')))
 // routing
     .use('/', routes)
     .use('/api', api);
@@ -33,9 +35,9 @@ app.configure(feathers.rest())
 var sequelize = require('feathers-sequelize');
 var models = require('./models');
 
-app.use('/api/builds', sequelize({ Model: models.Build }));
-app.use('/api/projects', sequelize({ Model: models.Project }));
-app.use('/api/servers', sequelize({ Model: models.Server }));
+app.use('/api/builds/', sequelize({ Model: models.Build }));
+app.use('/api/projects/', sequelize({ Model: models.Project }));
+app.use('/api/servers/', sequelize({ Model: models.Server }));
 
 // Api services
 var statusService = require('./api/status');

@@ -5,30 +5,28 @@ block content
 
     div.container-fluid
         div.row
-            div.col-md-6
+            div.col-md-12
                 div.panel.panel-default(ng-controller="BuildListCtrl")
                     div.panel-heading
                         h1.panel-title Build List
                     div.panel-body
-                        table.table.table-striped(st-table="displayedBuilds" st-safe-src="builds")
+                        table.table.table-striped(at-table at-paginated at-list="builds" at-config="atconfig")
                             thead
-                                tr
-                                    th.data-id(st-sort="id") #
-                                    th(st-sort="project") Project
-                                    th(st-sort="desc") Description
-                                    th(st-sort="status") Status
-                                tr
-                                    th(colspan="4")
-                                        input.input-sm.form-control(st-search placeholder="Search..." type="search")
                             tbody
-                                tr(ng-repeat="build in displayedBuilds")
-                                    td.data-id {{build.id}}
-                                    td {{build.project}}
-                                    td {{build.desc}}
-                                    td {{build.status}}
-                            tfoot
                                 tr
-                                    td.text-center(colspan="4")
-                                        div(st-pagination="" st-items-by-page="itemsByPage")
+                                    td(at-implicit at-sortable at-attribute="id" width="64" at-initial-sorting="desc")
+                                    td(at-implicit at-sortable at-attribute="project")
+                                    td(at-sortable at-attribute="platforms" width="128")
+                                        a(href="/api/builds/{{item.id}}/download/WindowsNoEditor.zip" ng-hide="!{{item.platforms.includes('WindowsNoEditor')}}")
+                                            i.fa.fa-windows(title="Windows")
+                                        a(href="/api/builds/{{item.id}}/download/WindowsServer.zip" ng-hide="!{{item.platforms.includes('WindowsServer')}}")
+                                            i.fa.fa-server(title="Windows Server" )
+                                        a(href="/api/builds/{{item.id}}/download/LinuxNoEditor.zip" ng-hide="!{{item.platforms.includes('LinuxNoEditor')}}")
+                                            i.fa.fa-linux(title="Windows")
+                                        a(href="/api/builds/{{item.id}}/download/LinuxServer.zip" ng-hide="!{{item.platforms.includes('LinuxServer')}}")
+                                            i.fa.fa-server(title="Linux Server" )
+                                    td(at-implicit at-sortable at-attribute="desc")
+                                    td(at-implicit at-sortable at-attribute="status")
+                        at-pagination(at-list="builds" at-config="atconfig")
 
  
