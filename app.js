@@ -36,8 +36,8 @@ var sequelize = require('feathers-sequelize');
 var models = require('./models');
 
 app.use('/api/builds/', sequelize({ Model: models.Build }));
-app.use('/api/projects/', sequelize({ Model: models.Project }));
-app.use('/api/servers/', sequelize({ Model: models.Server }));
+app.use('/api/projects/', sequelize({ Model: models.Project  }));
+app.use('/api/servers/', sequelize({ Model: models.Server, Id: 'ip' }));
 
 // Api services
 var statusService = require('./api/status');

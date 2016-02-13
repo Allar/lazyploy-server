@@ -1,0 +1,29 @@
+div.panel.panel-default(ng-controller="BuildListCtrl")
+                    div.panel-heading
+                        h1.panel-title Build List
+                    div.panel-body
+                        table.table.table-striped(at-table at-paginated at-list="builds" at-config="atconfig")
+                            thead
+                            tbody
+                                tr
+                                    td(at-implicit at-sortable at-attribute="id" width="64" at-initial-sorting="desc")
+                                    td(at-implicit at-sortable at-attribute="project")
+                                    td(at-sortable at-attribute="platforms" width="128")
+                                        div(ng-switch="item.status")
+                                            div(ng-switch-when="Completed")
+                                                a(href="/api/builds/{{item.id}}/download/WindowsNoEditor.zip" ng-hide="!{{item.platforms.includes('WindowsNoEditor')}}")
+                                                    i.fa.fa-windows(title="Windows")
+                                                a(href="/api/builds/{{item.id}}/download/WindowsServer.zip" ng-hide="!{{item.platforms.includes('WindowsServer')}}")
+                                                    i.fa.fa-server(title="Windows Server" )
+                                                a(href="/api/builds/{{item.id}}/download/LinuxNoEditor.zip" ng-hide="!{{item.platforms.includes('LinuxNoEditor')}}")
+                                                    i.fa.fa-linux(title="Windows")
+                                                a(href="/api/builds/{{item.id}}/download/LinuxServer.zip" ng-hide="!{{item.platforms.includes('LinuxServer')}}")
+                                            div(ng-switch-default)
+                                                i.fa.fa-windows(title="Windows" ng-hide="!{{item.platforms.includes('WindowsNoEditor')}}")  
+                                                i.fa.fa-server(title="Windows Server" ng-hide="!{{item.platforms.includes('WindowsServer')}}")                                        
+                                                i.fa.fa-linux(title="Linux" ng-hide="!{{item.platforms.includes('Linux')}}")                                   
+                                                i.fa.fa-server(title="Linux Server" ng-hide="!{{item.platforms.includes('Server')}}")
+                                                
+                                    td(at-implicit at-sortable at-attribute="desc")
+                                    td(at-implicit at-sortable at-attribute="status")
+                        at-pagination(at-list="builds" at-config="atconfig")

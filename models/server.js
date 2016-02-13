@@ -5,15 +5,21 @@ module.exports = function(sequelize, DataTypes) {
         hostname: {
             type: DataTypes.STRING
         },
-        ip : {
+        localip : {
             type: DataTypes.STRING
+        },
+        platform : {
+            type: DataTypes.STRING
+        },
+        build : {
+            type: DataTypes.INTEGER
         },
         status: {
             type: DataTypes.STRING
         }
     }, {
         freezeTableName: true,
-        force: true
+        force: false
     });
 
   return Server;

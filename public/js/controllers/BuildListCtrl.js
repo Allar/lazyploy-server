@@ -1,23 +1,20 @@
-var buildManagerApp = angular.module('buildManagerApp', ['socket.io', 'ui.bootstrap', 'smart-table', 'angular-table']);
+var buildListCtrl = angular.module('buildListCtrl', ['socket.io', 'angular-table']);
 
-buildManagerApp.filter('reverse', function() {
+buildListCtrl.filter('reverse', function() {
     return function(items) {
         return items.slice().reverse();
     };
 });
 
-buildManagerApp.controller('BuildListCtrl', function ($scope, $socket) {
+buildListCtrl.controller('BuildListCtrl', function ($scope, $socket) {
     
   $scope.builds = [];
   
   $scope.atconfig = {
       itemsPerPage: 5,
-      fillLastPage: true
+      fillLastPage: false
   }
-  
-  $scope.totalItems = $scope.builds.length;
-  $scope.itemsByPage = 5;
-  
+ 
   $scope.getTableRowClass = function(item) {
       if (item.status.includes("Completed")) {
           return 'success';
