@@ -1,20 +1,21 @@
 div.panel.panel-default(ng-controller="ServerListCtrl")
-                    div.panel-heading
-                        h1.panel-title Server List
-                    div.panel-body
-                        table.table.table-striped(at-table at-paginated at-list="servers" at-config="atconfig")
-                            thead
-                                tr
-                                    th(at-attribute="localip") Local IP
-                            tbody
-                                tr
-                                    td(at-implicit at-sortable at-attribute="hostname" at-initial-sorting="desc")
-                                    td(at-implicit at-sortable at-attribute="localip")
-                                    td(at-sortable at-attribute="platform" width="128")
-                                        i.fa.fa-windows(title="Windows" ng-hide="!{{item.platform.includes('WindowsNoEditor')}}")  
-                                        i.fa.fa-server(title="Windows Server" ng-hide="!{{item.platform.includes('WindowsServer')}}")                                        
-                                        i.fa.fa-linux(title="Linux" ng-hide="!{{item.platform.includes('Linux')}}")                                   
-                                        i.fa.fa-server(title="Linux Server" ng-hide="!{{item.platform.includes('LinuxServer')}}")        
-                                    td(at-implicit at-sortable at-attribute="build")
-                                    td(at-implicit at-sortable at-attribute="status")
-                        at-pagination(at-list="servers" at-config="atconfig")
+    div.panel-heading
+        h1.panel-title Server List
+    div.panel-body
+        table.table.table-striped(at-table at-paginated at-list="servers" at-config="atconfig")
+            thead
+                tr
+                    th(at-attribute="localip") Local IP
+            tbody
+                tr
+                    td(at-implicit at-sortable at-attribute="project")
+                    td(at-implicit at-sortable at-attribute="hostname" at-initial-sorting="desc")
+                    td(at-implicit at-sortable at-attribute="localip")
+                    td(at-sortable at-attribute="platform" width="128")
+                        i.fa.fa-windows(title="Windows" ng-hide="!{{item.platform.includes('WindowsNoEditor')}}")  
+                        i.fa.fa-server(title="Windows Server" ng-hide="!{{item.platform.includes('WindowsServer')}}")                                        
+                        i.fa.fa-linux(title="Linux" ng-hide="!{{item.platform.includes('Linux')}}")                                   
+                        i.fa.fa-server(title="Linux Server" ng-hide="!{{item.platform.includes('LinuxServer')}}")        
+                    td(at-implicit at-sortable at-attribute="build")
+                    td(at-implicit at-sortable at-attribute="status")
+        at-pagination(at-list="servers" at-config="atconfig")

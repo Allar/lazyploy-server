@@ -28,12 +28,10 @@ buildListCtrl.controller('BuildListCtrl', function ($scope, $socket) {
   }
   
   $socket.on('api/builds created', function(newbuild) {
-      console.log(newbuild);
       $scope.builds.unshift(newbuild);
   });
   
   $socket.on('api/builds updated', function(newbuild) {
-      console.log(newbuild);
       for (var i = 0; i < $scope.builds.length; ++i) {
           if ($scope.builds[i].id == newbuild.id) {
               $scope.builds[i] = newbuild;
@@ -44,7 +42,6 @@ buildListCtrl.controller('BuildListCtrl', function ($scope, $socket) {
   });
   
   $socket.on('api/builds patched', function(newbuild) {
-      console.log(newbuild);
       for (var i = 0; i < $scope.builds.length; ++i) {
           if ($scope.builds[i].id == newbuild.id) {
               $scope.builds[i] = newbuild;
@@ -57,7 +54,6 @@ buildListCtrl.controller('BuildListCtrl', function ($scope, $socket) {
       $sort: { id: -1 }
   }, function (error, data) {
       if (error) console.error(error);
-      if (data) console.log(data);
       $scope.builds = (data);
   });
   

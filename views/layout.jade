@@ -13,10 +13,11 @@ html(lang='en')
     script(src="/static/js/ui-bootstrap-tpls.js")
     script(src="/static/js/smart-table.js")
     script(src="/static/js/angular-table.js")
+    script(src="/static/js/controllers/AlertsCtrl.js")
     script(src="/static/js/controllers/ServerListCtrl.js")
     script(src="/static/js/controllers/BuildListCtrl.js")
     script.
-        var buildManagerApp = angular.module('buildManagerApp', ['buildListCtrl', 'serverListCtrl']);
+        var buildManagerApp = angular.module('buildManagerApp', ['buildListCtrl', 'serverListCtrl', 'alertsCtrl']);
   
   body(ng-app='buildManagerApp')
     block content

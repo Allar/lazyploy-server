@@ -24,6 +24,7 @@ app.configure(feathers.rest())
     .use('/static', feathers.static(path.join(__dirname, 'node_modules/bootstrap/dist')))
     .use('/static/js', feathers.static(path.join(__dirname, 'node_modules/angular')))
     .use('/static/js', feathers.static(path.join(__dirname, 'node_modules/angular-ui-bootstrap/dist')))
+    .use('/uib', feathers.static(path.join(__dirname, 'node_modules/angular-ui-bootstrap')))
     .use('/static/js', feathers.static(path.join(__dirname, 'node_modules/angular-smart-table/dist')))
     .use('/static/css', feathers.static(path.join(__dirname, 'node_modules/ng-table/dist')))
     .use('/static/js', feathers.static(path.join(__dirname, 'node_modules/ng-table/dist')))
@@ -74,6 +75,49 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+var serverService = app.service('/api/servers/');
+var staleServerThreshhold = 5;
+
+function checkForStaleServers() {    
+    models.Server.findAll({
+        where: {
+            updatedAt: {
+                $lt: new Date() - staleServerThreshhold*2*1000,
+                $ne: null
+            },
+            status: 'Stale'
+        }
+    }).then( (servers) => {
+        for (var i = 0; i < servers.length; ++i) {
+            serverService.remove(servers[i].id, {}, (err, data) => {
+                // server removed
+            });
+        } 
+        
+        models.Server.findAll({
+            where: {
+                updatedAt: {
+                    $lt: new Date() - staleServerThreshhold*1000
+                }
+            }
+        }).then( (servers) => {
+            console.log('Stale Servers: ' + JSON.stringify(servers));
+            for (var i = 0; i < servers.length; ++i) {
+                if (servers[i].status != 'Stale') {
+                    serverService.patch(servers[i].id,{
+                        status: 'Stale'
+                    }, {}, (err, data) => {
+                        // server updated       
+                    });
+                }
+            }
+            setTimeout(checkForStaleServers, 3000);
+        });   
+    });    
+}
+
+checkForStaleServers();
 
 
 module.exports = app;

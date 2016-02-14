@@ -3,11 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Build Manager' });
-});
-
-router.post('/', function(req, res, next) {
-  res.render('index', { title: 'Build Manager' });
+  res.render('index', { title: 'Lazyploy' });
 });
 
 module.exports = router;
