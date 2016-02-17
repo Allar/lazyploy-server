@@ -77,7 +77,7 @@ app.use(function(err, req, res, next) {
 });
 
 var serverService = app.service('/api/servers/');
-var staleServerThreshhold = 5;
+var staleServerThreshhold = 10;
 
 function checkForStaleServers() {    
     models.Server.findAll({

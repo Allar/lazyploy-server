@@ -6,7 +6,7 @@ var module = angular.module('socket.io', []);
 
 module.provider('$socket', function $socketProvider() {
     
-    var ioUrl = 'http://localhost/';
+    var ioUrl = "http://"+window.location.hostname;
     var ioConfig = {};
     
     function setOption(name, value, type) {
