@@ -6,6 +6,8 @@ Lazyploy Server can govern, recieve, distribute, and monitor builds of UE4 proje
 
 I originally wrote this so I can rapidly test UE4 cooked server builds on Windows and Linux without managing batch files for auto-deployment or setting up a Jenkins server. I wanted an automated deployment system that was incredibly easy to use with UE4 that requires minimal setup and just works. That being said, this is still very rough and many things don't work or aren't built. At its current state, it allows very rapid iteration for development builds of UE4 projects. Incredibly useful if you are an engineer who is writing server-only code and doesn't want to send a build through the Steam Pipe or bulkier pipeline. This was written so I can make ridiculously easy use of a 32-VM server on my local network for testing UE4 builds.
 
+The backend uses a Sqlite database with REST API/Socket.IO services written with Feathers and Sequelize. The frontend uses AngularJS, Bootstrap, and Socket.IO to provide real-time updates about builds and servers. 
+
 # Installation
 
 It can be installed locally, on a LAN, or a remote server. Please note that this project hasn't been appropriately security hardened so please _ONLY RUN ON TRUSTED NETWORKS_. Because of this, remote and public facing deployments of Lazyploy Server are _NOT RECOMMENDED AND DANGEROUS_.
@@ -38,6 +40,11 @@ While Lazyploy could easily be extended to not be UE4 specific and to support an
 
 # Support
 
-Support for this is currently limited as this is an ongoing project. Please give feedback and report any issues you may have, but it may take me some time to respond. If you would like to contribute, please do and submit a pull request!
+Support for this is currently limited as this is an ongoing project. Please give feedback and report any issues you may have either here on Github or on the forums, but it may take me some time to respond. If you would like to contribute, please do and submit a pull request!
 
 Forum thread: https://forums.unrealengine.com/showthread.php?100619-Lazyploy-Like-Jenkins-but-lazier&p=473196#post473196
+
+# TODO
+
+1. Set up a easy way to install this as a service.
+1. Allow real-time viewing of server logs.
