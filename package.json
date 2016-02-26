@@ -22,6 +22,7 @@
     "sequelize": "^3.18.0",
     "sequelize-cli": "^2.3.1",
     "serve-favicon": "~2.3.0",
-    "sqlite3": "^3.1.1"
+    "sqlite3": "^3.1.1",
+    "unirest": "^0.4.2"
   }
 }

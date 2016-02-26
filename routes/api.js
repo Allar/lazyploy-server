@@ -3,6 +3,7 @@ var router = require('feathers').Router();
 var fs = require('fs-extra');
 var mkdirp = require('mkdirp');
 var multer  = require('multer');
+var unirest = require('unirest');
 
 var upload_dir = './uploads';
 var storage_dir = './storage/';
@@ -68,6 +69,15 @@ router.get('/builds/:build_id/download/:file', function (req, res){
     .then(function(build) {
         res.sendfile(storage_dir + build.project + '/' + build.id + '/' + req.params.file);
     });
+});
+
+router.post('/builds/:build_id',function (req, res, next) {
+     unirest.patch(`http://localhost/api/builds/${req.params.build_id}`)
+     .send(req.body)
+     .end(function (response) {
+         res.status(response.code);
+         res.send(response.body);
+     });
 });
 
 router.post('/builds/:build_id/upload', upload.any(), function (req, res, next) {
