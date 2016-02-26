@@ -71,15 +71,6 @@ router.get('/builds/:build_id/download/:file', function (req, res){
     });
 });
 
-router.post('/builds/:build_id',function (req, res, next) {
-     unirest.patch(`http://localhost/api/builds/${req.params.build_id}`)
-     .send(req.body)
-     .end(function (response) {
-         res.status(response.code);
-         res.send(response.body);
-     });
-});
-
 router.post('/builds/:build_id/upload', upload.any(), function (req, res, next) {
     FindBuildOrFail(req.params.build_id, res)
     .then(function(build) {
@@ -94,6 +85,15 @@ router.post('/builds/:build_id/upload', upload.any(), function (req, res, next) 
         
         res.json({status: "Files uploaded."});
     });    
+});
+
+router.post('/builds/:build_id',function (req, res, next) {
+    unirest.patch(`http://localhost/api/builds/${req.params.build_id}`)
+    .send(req.body)
+    .end(function (response) {
+        res.status(response.code);
+        res.send(response.body);
+    });
 });
 
 module.exports = router;

@@ -29,7 +29,8 @@ app.configure(feathers.rest())
     .use('/static/css', feathers.static(path.join(__dirname, 'node_modules/ng-table/dist')))
     .use('/static/js', feathers.static(path.join(__dirname, 'node_modules/ng-table/dist')))
 // routing
-    .use('/', routes);
+    .use('/', routes)
+    .use('/api', api);
     
 
 // Direct database access  
@@ -40,7 +41,7 @@ app.use('/api/builds/', sequelize({ Model: models.Build }));
 app.use('/api/projects/', sequelize({ Model: models.Project  }));
 app.use('/api/servers/', sequelize({ Model: models.Server, Id: 'ip' }));
 
-app.use('/api', api);
+
 
 // Api services
 var statusService = require('./api/status');

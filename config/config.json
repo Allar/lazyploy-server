@@ -6,7 +6,8 @@
     "database": null,
     "host": "localhost",
     "dialect": "sqlite",
-    "storage": "database.sqlite"
+    "storage": "database.sqlite",
+    "logging": false
   },
   "test": {
     "username": null,
@@ -14,7 +15,8 @@
     "database": null,
     "host": "localhost",
     "dialect": "sqlite",
-    "storage": "database.sqlite"
+    "storage": "database.sqlite",
+    "logging": false
   },
   "production": {
     "username": null,
@@ -22,6 +24,7 @@
     "database": null,
     "host": "localhost",
     "dialect": "sqlite",
-    "storage": "database.sqlite"
+    "storage": "database.sqlite",
+    "logging": false
   }
 }
