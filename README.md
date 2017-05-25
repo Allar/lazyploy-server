@@ -19,8 +19,8 @@ If you are on Windows, check out [Node.js's Website](https://nodejs.org/en/).
 If you are on some form of Linux, use this to install the latest version of Node.js:
     
     sudo apt-get install curl
-    curl --silent --location https://deb.nodesource.com/setup_5.x | sudo bash -
-    sudo apt-get install nodejs
+    curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+    sudo apt-get install -y nodejs
     sudo apt-get install npm
 
 Port 80 must also be available on the server. If you are running locally on Windows, be careful about programs that use Port 80 such as Skype. If you are using Skype, you will need to go to `Tools -> Options -> Advanced -> Connection` and disable "Use port 80".
