@@ -44,6 +44,28 @@ Support for this is currently limited as this is an ongoing project. Please give
 
 Forum thread: https://forums.unrealengine.com/showthread.php?100619-Lazyploy-Like-Jenkins-but-lazier&p=473196#post473196
 
+# Sample Systemd script
+
+Requires dangerous 
+```
+sudo setcap 'cap_net_bind_service=+ep' `which node`
+```
+
+```
+[Service]
+ExecStart=/usr/bin/npm start
+WorkingDirectory=/home/lazyploy/lazyploy-server
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=node-sample
+User=lazyploy
+Group=lazyploy
+
+[Install]
+WantedBy=multi-user.target
+```
+
 # TODO
 
 1. Set up a easy way to install this as a service.
