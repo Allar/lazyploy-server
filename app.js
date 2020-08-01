@@ -1,4 +1,4 @@
-var feathers = require('feathers');
+var feathers = require('@feathersjs/feathers');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');

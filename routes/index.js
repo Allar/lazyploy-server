@@ -1,4 +1,4 @@
-var express = require('express');
+const express = require('@feathersjs/express');
 var router = express.Router();
 
 /* GET home page. */

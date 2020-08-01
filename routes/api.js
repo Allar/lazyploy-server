@@ -1,5 +1,5 @@
 var models = require('../models');
-var router = require('feathers').Router();
+var router = require('@feathersjs/feathers').Router();
 var fs = require('fs-extra');
 var mkdirp = require('mkdirp');
 var multer  = require('multer');
@@ -50,6 +50,9 @@ function FindBuildOrFail(build_id, res)
         });
     });
 }
+
+
+
 
 router.get('/projects/:project_name/build/new/:desc', function (req, res, next) {
     FindProjectOrFail(req.params.project_name, res)

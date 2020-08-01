@@ -1,6 +1,9 @@
 "use strict";
 
-module.exports = function(sequelize, DataTypes) {
+
+const { DataTypes } = require('sequelize');
+
+module.exports = (sequelize) => {
     var Build = sequelize.define('Build', {
         project: {
             type: DataTypes.STRING
@@ -18,8 +21,6 @@ module.exports = function(sequelize, DataTypes) {
         freezeTableName: true,
         force: false
     });
-
-  return Build;
 };
 
 
